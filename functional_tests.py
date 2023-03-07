@@ -35,10 +35,7 @@ class NewVistiorTest(unittest.TestCase):
 
         table = self.browser.find_element_by_id('id_list_table')
         rows = table.find_elements_by_tag_name('tr')
-        self.assertTrue(
-            any(row.text == '1. Code python project' for row in rows),
-            "New to-do item did not appear in table"
-        )
+        self.assertIn('1: Code python project', [row.text for row in rows])
         # There is another textbox to enter an item, so Sam
         # enters "start web server"
         self.fail('Finish the test')
@@ -52,4 +49,4 @@ class NewVistiorTest(unittest.TestCase):
         #Same exits the app
 
 if __name__ == '__main__':
-    unittest.main(warnings='ignore')
+    unittest.main()
