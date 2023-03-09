@@ -98,7 +98,7 @@ class NewVistiorTest(LiveServerTestCase):
         inputbox = self.browser.find_element_by_id('id_new_item')
         inputbox.send_keys('Buy almond milk')
         inputbox.send_keys(Keys.ENTER)
-        self.wait_for_row_in_list_table('1. Buy almond milk')
+        self.wait_for_row_in_list_table('1: Buy almond milk')
 
         # Alice gets her own unique URL
         alice_list_url = self.browser.current_url
@@ -110,5 +110,29 @@ class NewVistiorTest(LiveServerTestCase):
         self.assertNotIn('Code python project', page_text)
         self.assertIn('Buy almond milk', page_text)
 
+    def test_layout_and_styling(self):
+        #sam goes to the home page
+        self.browser.get(self.live_server_url)
+        self.browser.set_window_size(1024, 768)
+        
+        # same notices the input box is nicely center
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+                inputbox.location['x'] + inputbox.size['width'] /2,
+                512,
+                delta=10
+            )
+        
+        #sam starts a new list and sees the input is nicely
+        # centered there too
+        inputbox.send_keys('testing')
+        inputbox.send_keys(Keys.ENTER)
+        self.wait_for_row_in_list_table('1: testing')
+        inputbox = self.browser.find_element_by_id('id_new_item')
+        self.assertAlmostEqual(
+                inputbox.location['x'] + inputbox.size['width'] /2,
+                512,
+                delta=10
+        )
         # satisfied, they both go back to sleep
         self.fail('Finish the test!')

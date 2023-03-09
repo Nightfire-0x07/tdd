@@ -94,7 +94,7 @@ class NewListTest(TestCase):
         self.assertRedirects(response, f'/lists/{new_list.id}/')
 
 
-class NewItem(TestCase):
+class NewItemTest(TestCase):
 
     def test_can_save_a_POST_request_to_an_existing_list(self):
         other_list = List.objects.create()
